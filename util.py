@@ -310,33 +310,8 @@ def save_predictions(pred, file):
             writer.writerow({'Stance': label_ref_rev[instance]})
 
 
-def writeDictToFile(pred, cwd, file):
 
-    print(pred["headline"])
-    # with open(file, 'w') as csvfile:
 
-    #     fieldnames = ['Headline', 'Body ID', 'Stance']
-    #     writer = DictWriter(csvfile, fieldnames=fieldnames)
-    #     writer.writeheader()
-    #
-    #
-    #     for row in csv.DictReader(pred):
-    #         print("y ass")
-    #
-    #     # for instance in pred:
-    #     #     writer.writerow({'Stance': label_ref_rev[instance]})
-
-    with open(file, 'w') as csvfile:
-        fieldnames = ['first_name', 'last_name']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-        writer.writeheader()
-        writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
-        writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
-        writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
-
-    import sys
-    sys.exit(1)
 
 def save_predictions_headline_id_stance(raw_test,pred, file):
 
@@ -350,22 +325,13 @@ def save_predictions_headline_id_stance(raw_test,pred, file):
 
     """
 
-    counter_pred=0
+    counter = 0
 
-    # for instance in pred:
-    #     counter_pred = counter_pred + 1
-    #
-    #
-    # for instance in raw_test.instances:
-    #     head = instance['Headline']
-    #     body_id = instance['Body ID']
-    #     counter = counter + 1
 
-    # instance=raw_test.instances[0]
-    # head = instance['Headline']
-    # body_id = instance['Body ID']
-    # print(head,body_id)
-    #
+    instance_test = raw_test.instances[counter]
+    head = instance_test['Headline']
+    body_id = instance_test['Body ID']
+    # #
 
     counter = 0
 
@@ -375,9 +341,8 @@ def save_predictions_headline_id_stance(raw_test,pred, file):
 
         writer.writeheader()
         for instance in pred:
-            instance_test = raw_test.instances[counter]
-            head = instance_test['Headline']
-            body_id = instance_test['Body ID']
 
-            writer.writerow({'Stance': label_ref_rev[instance], 'Headline': head,'Body ID': body_id})
+
+            #writer.writerow({'Stance': label_ref_rev[instance], 'Headline': head,'Body ID': body_id})
+            writer.writerow({'Stance': label_ref_rev[instance], 'Headline': "tst"})
             counter = counter + 1

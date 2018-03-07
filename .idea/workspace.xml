@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2bdf109d-360a-4765-951e-f2294c6cf2fe" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/fakeScienceProject.iml" afterPath="$PROJECT_DIR$/.idea/fakeScienceProject.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pred.py" afterPath="$PROJECT_DIR$/pred.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/predictions_test_headline_id_stance.csv" afterPath="$PROJECT_DIR$/predictions_test_headline_id_stance.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/util.py" afterPath="$PROJECT_DIR$/util.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/util.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="265">
-              <caret line="367" column="4" lean-forward="false" selection-start-line="363" selection-start-column="6" selection-end-line="367" selection-end-column="4" />
+              <caret line="332" column="38" lean-forward="true" selection-start-line="330" selection-start-column="4" selection-end-line="332" selection-end-column="38" />
               <folding>
                 <element signature="e#620#646#0" expanded="true" />
                 <element signature="e#5390#8895#0" expanded="false" />
@@ -443,7 +442,7 @@
     <entry file="file://$PROJECT_DIR$/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
-          <caret line="367" column="4" lean-forward="false" selection-start-line="363" selection-start-column="6" selection-end-line="367" selection-end-column="4" />
+          <caret line="332" column="38" lean-forward="true" selection-start-line="330" selection-start-column="4" selection-end-line="332" selection-end-column="38" />
           <folding>
             <element signature="e#620#646#0" expanded="true" />
             <element signature="e#5390#8895#0" expanded="false" />

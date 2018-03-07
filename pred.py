@@ -17,7 +17,8 @@
 from util import *
 import random
 import tensorflow as tf
-
+import os
+import sys
 
 # Prompt for mode
 mode = input('mode (load / train)? ')
@@ -29,6 +30,8 @@ file_train_bodies = "train_bodies.csv"
 file_test_instances = "test_stances_unlabeled.csv"
 file_test_bodies = "test_bodies.csv"
 file_predictions = 'predictions_test.csv'
+file_predictions_headline_id_stance = 'predictions_test_headline_id_stance.csv'
+
 
 
 # Initialise hyperparameters
@@ -48,6 +51,8 @@ epochs = 90
 raw_train = FNCData(file_train_instances, file_train_bodies)
 raw_test = FNCData(file_test_instances, file_test_bodies)
 n_train = len(raw_train.instances)
+
+
 
 
 # Process data sets
@@ -86,6 +91,7 @@ predict = tf.arg_max(softmaxed_logits, 1)
 
 # Load model
 if mode == 'load':
+
     with tf.Session() as sess:
         load_model(sess)
 
@@ -129,3 +135,6 @@ if mode == 'train':
 
 # Save predictions
 save_predictions(test_pred, file_predictions)
+
+save_predictions_headline_id_stance(raw_test,test_pred, file_predictions_headline_id_stance)
+

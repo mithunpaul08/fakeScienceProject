@@ -22,6 +22,8 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import tensorflow as tf
+import csv
+import sys
 
 
 # Initialise global variables
@@ -70,6 +72,10 @@ class FNCData:
         # Load data
         self.instances = self.read(file_instances)
         bodies = self.read(file_bodies)
+
+
+
+
         self.heads = {}
         self.bodies = {}
 
@@ -212,7 +218,7 @@ def pipeline_train(train, test, lim_unigram):
 
     return train_set, train_stances, bow_vectorizer, tfreq_vectorizer, tfidf_vectorizer
 
-
+#test_set = pipeline_test(raw_test, bow_vectorizer, tfreq_vectorizer, tfidf_vectorizer)
 def pipeline_test(test, bow_vectorizer, tfreq_vectorizer, tfidf_vectorizer):
 
     """
@@ -295,9 +301,49 @@ def save_predictions(pred, file):
     """
 
     with open(file, 'w') as csvfile:
+
         fieldnames = ['Stance']
         writer = DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
         for instance in pred:
             writer.writerow({'Stance': label_ref_rev[instance]})
+
+
+
+
+
+def save_predictions_headline_id_stance(raw_test,pred, file):
+
+    """
+
+    Save predictions to CSV file
+
+    Args:
+        pred: numpy array, of numeric predictions
+        file: str, filename + extension
+
+    """
+
+    counter = 0
+
+
+
+    # #
+
+    counter = 0
+
+    with open(file, 'w') as csvfile:
+        fieldnames = ['Headline','Body ID','Stance']
+        writer = DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        for instance in pred:
+            instance_test = raw_test.instances[counter]
+            head = instance_test['Headline']
+            body_id = instance_test['Body ID']
+
+
+            writer.writerow({'Stance': label_ref_rev[instance], 'Headline': head,'Body ID': body_id})
+            #writer.writerow({'Stance': label_ref_rev[instance], 'Headline': "tst"})
+            counter = counter + 1

@@ -328,9 +328,7 @@ def save_predictions_headline_id_stance(raw_test,pred, file):
     counter = 0
 
 
-    instance_test = raw_test.instances[counter]
-    head = instance_test['Headline']
-    body_id = instance_test['Body ID']
+
     # #
 
     counter = 0
@@ -341,8 +339,11 @@ def save_predictions_headline_id_stance(raw_test,pred, file):
 
         writer.writeheader()
         for instance in pred:
+            instance_test = raw_test.instances[counter]
+            head = instance_test['Headline']
+            body_id = instance_test['Body ID']
 
 
-            #writer.writerow({'Stance': label_ref_rev[instance], 'Headline': head,'Body ID': body_id})
-            writer.writerow({'Stance': label_ref_rev[instance], 'Headline': "tst"})
+            writer.writerow({'Stance': label_ref_rev[instance], 'Headline': head,'Body ID': body_id})
+            #writer.writerow({'Stance': label_ref_rev[instance], 'Headline': "tst"})
             counter = counter + 1

@@ -24,6 +24,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 import tensorflow as tf
 import csv
 import sys
+import logging
+import nltk
+from nltk import word_tokenize
+nltk.download('averaged_perceptron_tagger')
 
 
 # Initialise global variables
@@ -182,13 +186,94 @@ def pipeline_train(train, test, lim_unigram):
         id_ref[elem] = i
 
     # Create vectorizers and BOW and TF arrays for train set
-    bow_vectorizer = CountVectorizer(max_features=lim_unigram, stop_words=stop_words)
-    bow = bow_vectorizer.fit_transform(heads + bodies)  # Train set only
+    bow_vectorizer = CountVectorizer(max_features=lim_unigram, stop_words=stop_words,ngram_range=(1,3))
 
-    tfreq_vectorizer = TfidfTransformer(use_idf=False).fit(bow)
+    '''#mithun adding for analysis/debug
+  analyze= bow_vectorizer.build_analyzer()
+
+
+  print(analyze("she sells sea shells in the sea shore"))
+  shell=bow_vectorizer.fit_transform("she sells sea shells in the sea shore").toarray()
+  '''
+    logging.basicConfig( level=logging.INFO)
+
+    #create POS tags for heads and remove all nouns
+    logging.debug("length of heads:" + str(len(heads)))
+    logging.debug(heads[0])
+    heads_join= ''.join(heads)
+    logging.debug("length of heads_join:"+str(len(heads_join)))
+    logging.debug(heads_join[0])
+    heads_tok=word_tokenize(heads_join)
+    logging.debug(heads_tok[0])
+    heads_pos=nltk.pos_tag(heads_tok)
+    #print(heads_pos)
+    heads_nonoun=[]
+
+    for t in heads_pos:
+        # try this for kicks
+        #if (t[1]==("NNP")):
+        if(not (t[1].startswith("NN"))):
+            #print(t[0])
+            heads_nonoun.append(t[0])
+
+        #print(nltk.tag.str2tuple(t))
+
+
+    logging.debug(len(heads_nonoun))
+    logging.debug(len(heads))
+
+
+    # create POS tags for heads and remove all nouns
+    logging.debug("length of bodies:" + str(len(bodies)))
+    logging.debug(bodies[0])
+
+    totalWordCount=0
+    for eachSent in bodies:
+        logging.debug(eachSent)
+        words=eachSent.split(" ")
+        for eachword in words:
+            totalWordCount=totalWordCount+1
+
+    logging.info("totalWordCount:" + str(totalWordCount))
+    bodies_join = ''.join(bodies)
+    logging.info("length of bodies_join:" + str(len(bodies_join)))
+    logging.info(bodies_join[0])
+
+    bodies_tok = word_tokenize(bodies_join)
+    logging.info("length of bodies_tok:" + str(len(bodies_tok)))
+    logging.info(bodies_tok[0])
+    bodies_pos = nltk.pos_tag(bodies_tok)
+    logging.debug(bodies_pos[0])
+
+    bodies_nonoun = []
+
+
+    for t in bodies_pos:
+        # try this for kicks
+        # if (t[1]==("NNP")):
+        if (not (t[1].startswith("NN"))):
+            logging.debug(t[0])
+            bodies_nonoun.append(t[0])
+
+
+            # print(nltk.tag.str2tuple(t))
+
+
+    logging.info("length of bodies_nonoun:" + str(len(bodies_nonoun)))
+    # logging.debug(len(heads_nonoun))
+    # logging.debug(len(heads))
+
+    sys.exit(1)
+
+
+    bow = bow_vectorizer.fit_transform(heads_nonoun + bodies_nonoun)  # remove all nouns and see if it increases the accuracy
+
+    #bow = bow_vectorizer.fit_transform(heads + bodies)  # Train set only
+
+    tfreq_vectorizer = TfidfTransformer(use_idf=False,).fit(bow)
     tfreq = tfreq_vectorizer.transform(bow).toarray()  # Train set only
 
-    tfidf_vectorizer = TfidfVectorizer(max_features=lim_unigram, stop_words=stop_words).\
+    tfidf_vectorizer = TfidfVectorizer(max_features=lim_unigram, ngram_range=(1,3),stop_words=stop_words).\
         fit(heads + bodies + test_heads + test_bodies)  # Train and test sets
 
     # Process train set
